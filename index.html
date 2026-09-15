@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAN B — Catálogo Digital Profesional</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration for PLAN B strict color palette -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0A0A0C',
+                            dark: '#121216',
+                            card: '#18181F',
+                            blue: '#2563EB',
+                            blueHover: '#1D4ED8',
+                            blueGlow: '#3B82F6',
+                            lightBlue: '#EFF6FF',
+                            white: '#FFFFFF',
+                            grayText: '#94A3B8'
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 25px -5px rgba(37, 99, 235, 0.4)',
+                        'glow-lg': '0 0 40px -10px rgba(37, 99, 235, 0.6)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0C;
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563EB;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1D4ED8;
+        }
+
+        /* Ambient Glow animation */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.08); }
+        }
+        .animate-glow {
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+
+        .glass-nav {
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-brand-black text-white antialiased flex flex-col min-h-screen">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav border-b border-white/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- LOGO -->
+            <a href="#inicio" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-brand-blue rounded-xl flex items-center justify-center text-white font-black text-xl shadow-glow transition-transform duration-300 group-hover:scale-105">
+                    B
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-wider text-white font-sans flex items-center gap-1">
+                        PLAN<span class="text-brand-blue">B</span>
+                    </span>
+                    <span class="text-[10px] tracking-widest text-brand-grayText uppercase font-semibold">Catálogo Digital</span>
+                </div>
+            </a>
+
+            <!-- DESKTOP NAV MENU -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#inicio" class="text-sm font-medium text-white/90 hover:text-brand-blue transition-colors">Inicio</a>
+                <a href="#catalogo" class="text-sm font-medium text-white/90 hover:text-brand-blue transition-colors">Catálogo</a>
+                <a href="#categorias" class="text-sm font-medium text-white/90 hover:text-brand-blue transition-colors">Categorías</a>
+                <a href="#contacto" class="text-sm font-medium text-white/90 hover:text-brand-blue transition-colors">Contacto</a>
+            </nav>
+
+            <!-- WHATSAPP DIRECT CTA BUTTON -->
+            <div class="hidden sm:flex items-center">
+                <a href="https://wa.me/523326016577?text=Hola%20PLAN%20B,%20deseo%20obtener%20más%20información%20sobre%20su%20catálogo." 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="bg-brand-blue hover:bg-brand-blueHover text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-glow hover:shadow-glow-lg transition-all duration-300 flex items-center gap-2 transform hover:-translate-y-0.5">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>WHATSAPP</span>
+                </a>
+            </div>
+
+            <!-- MOBILE MENU TOGGLE -->
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-blue text-2xl focus:outline-none p-2" aria-label="Abrir menú">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <!-- MOBILE NAV DRAWER -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark/95 border-b border-white/10 px-4 pt-4 pb-6 space-y-4 backdrop-blur-lg">
+            <a href="#inicio" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-white hover:bg-white/5 hover:text-brand-blue">Inicio</a>
+            <a href="#catalogo" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-white hover:bg-white/5 hover:text-brand-blue">Catálogo</a>
+            <a href="#categorias" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-white hover:bg-white/5 hover:text-brand-blue">Categorías</a>
+            <a href="#contacto" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-white hover:bg-white/5 hover:text-brand-blue">Contacto</a>
+            
+            <a href="https://wa.me/523326016577?text=Hola%20PLAN%20B,%20deseo%20obtener%20más%20información%20sobre%20su%20catálogo." 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="w-full bg-brand-blue hover:bg-brand-blueHover text-white py-3 rounded-xl font-bold text-center shadow-glow flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>WHATSAPP (3326016577)</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden flex items-center min-h-[85vh]">
+        <!-- Background Ambient Glow Effects -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-blue/20 rounded-full blur-[140px] pointer-events-none animate-glow"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-brand-blue/10 rounded-full blur-[100px] pointer-events-none"></div>
+        
+        <!-- Subtle Grid Pattern Background -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    <!-- Brand Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-brand-blue/30 text-brand-blue text-xs sm:text-sm font-semibold tracking-wider uppercase">
+                        <span class="w-2 h-2 rounded-full bg-brand-blue animate-ping"></span>
+                        Catálogo Digital Exclusivo
+                    </div>
+
+                    <!-- Main Headline -->
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
+                        PLAN <span class="text-brand-blue drop-shadow-[0_0_25px_rgba(37,99,235,0.5)]">B</span>
+                    </h1>
+
+                    <p class="text-2xl sm:text-3xl font-extrabold text-white/95 tracking-wide">
+                        "Calidad, estilo y esenciales que van contigo."
+                    </p>
+
+                    <!-- Secondary Description -->
+                    <p class="text-brand-grayText text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Descubre nuestra selección de productos cuidadosamente elegidos para ofrecer calidad, estilo y excelentes opciones para cada ocasión.
+                    </p>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                        <a href="#catalogo" 
+                           class="bg-white text-brand-black hover:bg-gray-100 font-extrabold px-8 py-4 rounded-xl text-center shadow-lg transition-all duration-300 flex items-center justify-center gap-3 transform hover:-translate-y-1">
+                            <span>VER CATÁLOGO</span>
+                            <i class="fa-solid fa-arrow-down text-brand-blue"></i>
+                        </a>
+
+                        <a href="https://wa.me/523326016577?text=Hola%20PLAN%20B,%20me%20gustaría%20contactar%20con%20ustedes." 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="bg-brand-blue hover:bg-brand-blueHover text-white font-extrabold px-8 py-4 rounded-xl text-center shadow-glow hover:shadow-glow-lg transition-all duration-300 flex items-center justify-center gap-3 transform hover:-translate-y-1">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>CONTACTAR POR WHATSAPP</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust indicators -->
+                    <div class="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-center max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <p class="text-xl font-bold text-white">100%</p>
+                            <p class="text-xs text-brand-grayText">Atención Directa</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-white">Garantía</p>
+                            <p class="text-xs text-brand-grayText">de Calidad</p>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-white">Respuesta</p>
+                            <p class="text-xs text-brand-grayText">Inmediata</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HERO VISUAL BANNER -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <!-- Decorative Glass Frame -->
+                        <div class="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-3xl border border-white/15 shadow-2xl backdrop-blur-md">
+                            <div class="bg-brand-dark rounded-2xl p-6 relative overflow-hidden border border-white/5 space-y-6">
+                                
+                                <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                                    <span class="text-xs uppercase font-bold tracking-widest text-brand-blue">Especiales PLAN B</span>
+                                    <span class="text-xs text-brand-grayText"><i class="fa-solid fa-lock text-brand-blue mr-1"></i> Catálogo Oficial</span>
+                                </div>
+
+                                <!-- Feature Card Teaser -->
+                                <div class="bg-brand-black/80 p-4 rounded-xl border border-white/10 flex items-center gap-4 hover:border-brand-blue/50 transition-colors">
+                                    <div class="w-14 h-14 bg-brand-blue/10 rounded-lg flex items-center justify-center text-brand-blue text-2xl shrink-0">
+                                        <i class="fa-solid fa-headphones"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-brand-blue font-bold uppercase">Audio Premium</p>
+                                        <h3 class="font-bold text-white text-sm">AirPods 2 Pro & GEN</h3>
+                                        <p class="text-xs text-brand-grayText">Desde $150 MXN</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-brand-black/80 p-4 rounded-xl border border-white/10 flex items-center gap-4 hover:border-brand-blue/50 transition-colors">
+                                    <div class="w-14 h-14 bg-brand-blue/10 rounded-lg flex items-center justify-center text-brand-blue text-2xl shrink-0">
+                                        <i class="fa-solid fa-spray-can"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-brand-blue font-bold uppercase">Perfumería</p>
+                                        <h3 class="font-bold text-white text-sm">Variedad de Perfumes</h3>
+                                        <p class="text-xs text-brand-grayText">$400 — $580 MXN</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-brand-black/80 p-4 rounded-xl border border-white/10 flex items-center gap-4 hover:border-brand-blue/50 transition-colors">
+                                    <div class="w-14 h-14 bg-brand-blue/10 rounded-lg flex items-center justify-center text-brand-blue text-2xl shrink-0">
+                                        <i class="fa-solid fa-hat-cowboy-side"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-brand-blue font-bold uppercase">Accesorios Urbanos</p>
+                                        <h3 class="font-bold text-white text-sm">Gorras Dandy & Barbas Hats</h3>
+                                        <p class="text-xs text-brand-grayText">$400 — $500 MXN</p>
+                                    </div>
+                                </div>
+
+                                <div class="pt-2 text-center">
+                                    <p class="text-xs text-brand-grayText flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-circle-check text-brand-blue"></i>
+                                        Consulta disponibilidad directa por WhatsApp
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES & HIGHLIGHT SECTION -->
+    <section id="categorias" class="py-12 bg-brand-dark border-y border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <h2 class="text-xs uppercase font-extrabold text-brand-blue tracking-widest mb-2">Explora por Líneas</h2>
+                <p class="text-2xl sm:text-3xl font-black text-white">NUESTRAS CATEGORÍAS</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Category 1: Audio -->
+                <div onclick="filterCategory('Audio')" class="cursor-pointer bg-brand-card hover:bg-brand-black border border-white/10 hover:border-brand-blue p-6 rounded-2xl transition-all duration-300 group shadow-md hover:shadow-glow">
+                    <div class="w-12 h-12 bg-brand-blue/20 rounded-xl flex items-center justify-center text-brand-blue text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-headphones"></i>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-brand-blue">Línea Tecno</span>
+                    <h3 class="text-xl font-black text-white mt-1 mb-2">Audio</h3>
+                    <p class="text-sm text-brand-grayText">Audífonos inalámbricos con caja premium y opciones con cancelación de ruido real.</p>
+                    <div class="mt-4 flex items-center text-xs font-bold text-white group-hover:text-brand-blue gap-2">
+                        <span>Ver productos</span>
+                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+
+                <!-- Category 2: Perfumería -->
+                <div onclick="filterCategory('Perfumería')" class="cursor-pointer bg-brand-card hover:bg-brand-black border border-white/10 hover:border-brand-blue p-6 rounded-2xl transition-all duration-300 group shadow-md hover:shadow-glow">
+                    <div class="w-12 h-12 bg-brand-blue/20 rounded-xl flex items-center justify-center text-brand-blue text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-spray-can"></i>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-brand-blue">Línea Fragancias</span>
+                    <h3 class="text-xl font-black text-white mt-1 mb-2">Perfumería</h3>
+                    <p class="text-sm text-brand-grayText">Variedad de estilos y aromas seleccionados para complementar tu presencia diaria.</p>
+                    <div class="mt-4 flex items-center text-xs font-bold text-white group-hover:text-brand-blue gap-2">
+                        <span>Ver productos</span>
+                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+
+                <!-- Category 3: Accesorios -->
+                <div onclick="filterCategory('Accesorios')" class="cursor-pointer bg-brand-card hover:bg-brand-black border border-white/10 hover:border-brand-blue p-6 rounded-2xl transition-all duration-300 group shadow-md hover:shadow-glow">
+                    <div class="w-12 h-12 bg-brand-blue/20 rounded-xl flex items-center justify-center text-brand-blue text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-hat-cowboy-side"></i>
+                    </div>
+                    <span class="text-xs uppercase font-bold text-brand-blue">Línea Urbana</span>
+                    <h3 class="text-xl font-black text-white mt-1 mb-2">Accesorios</h3>
+                    <p class="text-sm text-brand-grayText">Gorras de estilo único como Dandy Hats, Barbas Hats y más modelos actuales.</p>
+                    <div class="mt-4 flex items-center text-xs font-bold text-white group-hover:text-brand-blue gap-2">
+                        <span>Ver productos</span>
+                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN PRODUCT CATALOG SECTION -->
+    <section id="catalogo" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-xs uppercase font-extrabold text-brand-blue tracking-widest block mb-1">Catálogo Exclusivo</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">NUESTROS PRODUCTOS</h2>
+                </div>
+                <p class="text-brand-grayText max-w-md text-sm">
+                    Explora los detalles de cada producto y presiona el botón para consultar existencias, colores o realizar tu pedido directo con atención personal en WhatsApp.
+                </p>
+            </div>
+
+            <!-- FILTER CONTROLS & SEARCH BAR -->
+            <div class="bg-brand-card p-4 rounded-2xl border border-white/10 mb-10 flex flex-col md:flex-row gap-4 justify-between items-center">
+                
+                <!-- Category Buttons -->
+                <div class="flex flex-wrap gap-2 w-full md:w-auto" id="category-filters">
+                    <button onclick="filterCategory('Todos')" data-cat="Todos" class="filter-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all bg-brand-blue text-white shadow-glow">
+                        Todos
+                    </button>
+                    <button onclick="filterCategory('Audio')" data-cat="Audio" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-brand-black hover:bg-white/10 text-white/80">
+                        Audio
+                    </button>
+                    <button onclick="filterCategory('Perfumería')" data-cat="Perfumería" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-brand-black hover:bg-white/10 text-white/80">
+                        Perfumería
+                    </button>
+                    <button onclick="filterCategory('Accesorios')" data-cat="Accesorios" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-brand-black hover:bg-white/10 text-white/80">
+                        Accesorios
+                    </button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative w-full md:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-grayText text-sm"></i>
+                    <input type="text" id="catalog-search" placeholder="Buscar producto..." onkeyup="handleSearch()" class="w-full bg-brand-black border border-white/15 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-brand-grayText focus:outline-none focus:border-brand-blue transition-colors">
+                </div>
+            </div>
+
+            <!-- PRODUCT GRID -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Dynamic Products loaded via JS -->
+            </div>
+
+            <!-- No Results Message (Hidden by default) -->
+            <div id="no-results" class="hidden text-center py-16 bg-brand-card rounded-2xl border border-white/10">
+                <i class="fa-solid fa-box-open text-4xl text-brand-grayText mb-3"></i>
+                <h3 class="text-xl font-bold text-white mb-1">No se encontraron productos</h3>
+                <p class="text-sm text-brand-grayText mb-4">Intenta ajustar tu búsqueda o filtro de categorías.</p>
+                <button onclick="resetFilters()" class="bg-brand-blue text-white text-xs font-bold px-4 py-2 rounded-xl shadow-glow">
+                    Restablecer Filtros
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- BRAND GUARANTEES / WHY PLAN B -->
+    <section class="py-16 bg-brand-dark border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue text-xl shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-white text-base">Calidad Comprobada</h4>
+                        <p class="text-xs text-brand-grayText mt-1">Productos seleccionados cuidadosamente para ofrecer durabilidad y estilo.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue text-xl shrink-0">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-white text-base">Trato Personalizado</h4>
+                        <p class="text-xs text-brand-grayText mt-1">Atención rápida y directa por WhatsApp sin intermediarios molestos.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue text-xl shrink-0">
+                        <i class="fa-solid fa-tag"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-white text-base">Precios Justos</h4>
+                        <p class="text-xs text-brand-grayText mt-1">Excelente balance entre calidad, apariencia y costo competitivo.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/30 flex items-center justify-center text-brand-blue text-xl shrink-0">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-white text-base">Entregas Rápidas</h4>
+                        <p class="text-xs text-brand-grayText mt-1">Coordinación directa para acordar entregas y envíos a tu conveniencia.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & WHATSAPP DIRECT SECTION -->
+    <section id="contacto" class="py-20 relative overflow-hidden bg-brand-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="bg-gradient-to-br from-brand-card to-brand-dark rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+                <!-- Background Accent Glow -->
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-brand-blue/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-8 space-y-4">
+                        <span class="text-xs font-bold text-brand-blue uppercase tracking-widest">Contacto Directo</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-white">¿TIENES DUDAS O QUIERES HACER UN PEDIDO?</h2>
+                        <p class="text-brand-grayText text-sm sm:text-base leading-relaxed">
+                            En <strong class="text-white">PLAN B</strong> te atendemos de forma directa y personalizada. Haz clic en cualquiera de nuestros números para iniciar un chat inmediato por WhatsApp con nuestro equipo.
+                        </p>
+                        
+                        <!-- Contact Phone / WhatsApp Numbers Grid -->
+                        <div class="pt-2 flex flex-col sm:flex-row sm:flex-wrap gap-3 text-sm text-white font-medium">
+                            <a href="https://wa.me/523326016577?text=Hola%20PLAN%20B,%20quisiera%20más%20información." 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="flex items-center gap-2.5 bg-brand-black/70 hover:bg-brand-black px-4 py-2.5 rounded-xl border border-white/10 hover:border-brand-blue/50 transition-all duration-300 group">
+                                <i class="fa-brands fa-whatsapp text-brand-blue text-lg group-hover:scale-110 transition-transform"></i>
+                                <span class="font-bold text-white group-hover:text-brand-blue transition-colors">33 2601 6577</span>
+                            </a>
+
+                            <a href="https://wa.me/523314382970?text=Hola%20PLAN%20B,%20quisiera%20más%20información." 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="flex items-center gap-2.5 bg-brand-black/70 hover:bg-brand-black px-4 py-2.5 rounded-xl border border-white/10 hover:border-brand-blue/50 transition-all duration-300 group">
+                                <i class="fa-brands fa-whatsapp text-brand-blue text-lg group-hover:scale-110 transition-transform"></i>
+                                <span class="font-bold text-white group-hover:text-brand-blue transition-colors">33 1438 2970</span>
+                            </a>
+
+                            <a href="https://wa.me/523332307907?text=Hola%20PLAN%20B,%20quisiera%20más%20información." 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="flex items-center gap-2.5 bg-brand-black/70 hover:bg-brand-black px-4 py-2.5 rounded-xl border border-white/10 hover:border-brand-blue/50 transition-all duration-300 group">
+                                <i class="fa-brands fa-whatsapp text-brand-blue text-lg group-hover:scale-110 transition-transform"></i>
+                                <span class="font-bold text-white group-hover:text-brand-blue transition-colors">33 3230 7907</span>
+                            </a>
+
+                            <div class="flex items-center gap-2 bg-brand-black/40 px-4 py-2.5 rounded-xl border border-white/5">
+                                <i class="fa-solid fa-clock text-brand-blue text-sm"></i>
+                                <span class="text-xs text-brand-grayText font-semibold">Lunes a Sábado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 flex flex-col items-stretch lg:items-end justify-center">
+                        <a href="https://wa.me/523326016577?text=Hola%20PLAN%20B,%20quisiera%20consultar%20información%20sobre%20sus%20productos." 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="bg-brand-blue hover:bg-brand-blueHover text-white font-black px-8 py-5 rounded-2xl text-center shadow-glow hover:shadow-glow-lg transition-all duration-300 flex items-center justify-center gap-3 text-base">
+                            <i class="fa-brands fa-whatsapp text-2xl"></i>
+                            <span>CONTACTAR AHORA</span>
+                        </a>
+                        <span class="text-[11px] text-brand-grayText text-center lg:text-right mt-3">Líneas Oficiales de WhatsApp PLAN B</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark border-t border-white/10 py-12 text-xs text-brand-grayText">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                
+                <!-- Footer Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-brand-blue rounded-lg flex items-center justify-center text-white font-black text-sm shadow-glow">
+                        B
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-white text-base tracking-wide">PLAN B</span>
+                        <p class="text-[11px] text-brand-grayText">Catálogo Digital Oficial</p>
+                    </div>
+                </div>
+
+                <!-- Nav links -->
+                <div class="flex flex-wrap gap-6 justify-center text-white/80 font-medium">
+                    <a href="#inicio" class="hover:text-brand-blue transition-colors">Inicio</a>
+                    <a href="#catalogo" class="hover:text-brand-blue transition-colors">Catálogo</a>
+                    <a href="#categorias" class="hover:text-brand-blue transition-colors">Categorías</a>
+                    <a href="#contacto" class="hover:text-brand-blue transition-colors">Contacto</a>
+                </div>
+
+                <!-- Copyright -->
+                <div class="text-center md:text-right">
+                    <p>© 2026 PLAN B. Todos los derechos reservados.</p>
+                    <p class="mt-1 text-[10px] text-white/40">Calidad, estilo y esenciales que van contigo.</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-brand-card border border-white/15 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl relative transform transition-all">
+            
+            <!-- Close Modal Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-brand-black/80 text-white hover:text-brand-blue border border-white/10 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="p-6 sm:p-8 space-y-6">
+                <!-- Modal Badge & Category -->
+                <div class="flex items-center justify-between">
+                    <span id="modal-category" class="text-xs uppercase font-extrabold text-brand-blue tracking-widest bg-brand-blue/10 border border-brand-blue/30 px-3 py-1 rounded-full">Categoría</span>
+                    <span id="modal-tags" class="flex gap-2"></span>
+                </div>
+
+                <!-- Graphic/Visual Header -->
+                <div class="h-48 rounded-2xl bg-gradient-to-br from-brand-black to-brand-dark border border-white/10 flex items-center justify-center relative overflow-hidden group">
+                    <div id="modal-icon" class="text-6xl text-brand-blue/80 transition-transform group-hover:scale-110"></div>
+                    <div class="absolute inset-0 bg-brand-blue/5 pointer-events-none"></div>
+                </div>
+
+                <!-- Modal Title & Price -->
+                <div class="space-y-2">
+                    <h3 id="modal-title" class="text-2xl font-black text-white">Nombre del Producto</h3>
+                    <p id="modal-price" class="text-xl font-bold text-brand-blue">$0 MXN</p>
+                </div>
+
+                <!-- Modal Full Description -->
+                <p id="modal-description" class="text-sm text-brand-grayText leading-relaxed bg-brand-black/50 p-4 rounded-xl border border-white/5">
+                    Descripción del producto.
+                </p>
+
+                <!-- Action Button -->
+                <div class="pt-2">
+                    <a id="modal-whatsapp-btn" 
+                       href="#" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="w-full bg-brand-blue hover:bg-brand-blueHover text-white py-4 rounded-xl font-black text-center shadow-glow hover:shadow-glow-lg transition-all duration-300 flex items-center justify-center gap-3 text-base">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>CONSULTAR POR WHATSAPP</span>
+                    </a>
+                    <p class="text-[11px] text-brand-grayText text-center mt-2">
+                        Serás redirigido a WhatsApp con un mensaje redactado para este producto.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // STRICT BRAND PRODUCTS DATA
+        const PRODUCTS = [
+            {
+                id: 1,
+                name: "AirPods 2 Pro",
+                subtitle: "Sin cancelación — Caja Premium",
+                price: "$150 MXN",
+                rawPrice: 150,
+                description: "Audífonos inalámbricos con diseño inspirado en la línea premium de AirPods. Una opción práctica para disfrutar de tu música, contenido y llamadas con un diseño moderno y cómodo. Incluyen presentación con caja premium, ideal para quienes buscan una excelente relación entre apariencia, funcionalidad y precio.",
+                category: "Audio",
+                tags: ["Caja Premium"],
+                icon: "fa-solid fa-headphones",
+                bgGradient: "from-blue-900/20 to-brand-black"
+            },
+            {
+                id: 2,
+                name: "AirPods 2 Pro — GEN",
+                subtitle: "Con cancelación real — Alta calidad",
+                price: "$240 MXN",
+                rawPrice: 240,
+                description: "Audífonos inalámbricos de alta calidad con cancelación de ruido real, diseñados para ofrecer una experiencia de audio más inmersiva y una experiencia cómoda para el uso diario. Una alternativa ideal para quienes buscan mejores prestaciones y una presentación de mayor calidad.",
+                category: "Audio",
+                tags: ["Alta Calidad", "Cancelación Real"],
+                icon: "fa-solid fa-ear-listen",
+                bgGradient: "from-blue-950/30 to-brand-black"
+            },
+            {
+                id: 3,
+                name: "Variedad de Perfumes",
+                subtitle: "Fragancias seleccionadas para cada ocasión",
+                price: "$400 — $580 MXN",
+                rawPrice: 400,
+                description: "Descubre nuestra selección de perfumes en diferentes estilos y aromas. Una variedad pensada para complementar tu personalidad y encontrar una fragancia ideal para cada ocasión, desde opciones frescas y ligeras hasta aromas más intensos y sofisticados.",
+                category: "Perfumería",
+                tags: ["Estilo Personal", "Variedad"],
+                icon: "fa-solid fa-spray-can",
+                bgGradient: "from-indigo-950/20 to-brand-black"
+            },
+            {
+                id: 4,
+                name: "Gorras",
+                subtitle: "Dandy Hats, Barbas Hats y más",
+                price: "$400 — $500 MXN",
+                rawPrice: 400,
+                description: "Selección de gorras con diseños urbanos y actuales, incluyendo estilos como Dandy Hats, Barbas Hats y otras opciones. Accesorios ideales para complementar diferentes outfits y darle un toque distintivo a tu estilo.",
+                category: "Accesorios",
+                tags: ["Dandy Hats", "Barbas Hats", "Estilo Urbano"],
+                icon: "fa-solid fa-hat-cowboy-side",
+                bgGradient: "from-slate-900/40 to-brand-black"
+            }
+        ];
+
+        // STATE VARIABLES
+        let currentCategory = "Todos";
+        let searchQuery = "";
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            setupMobileMenu();
+        });
+
+        // MOBILE MENU TOGGLE LOGIC
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const links = document.querySelectorAll('.mobile-nav-link');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        }
+
+        // RENDER PRODUCT CARDS
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const noResults = document.getElementById('no-results');
+
+            // Filter logic
+            const filtered = PRODUCTS.filter(p => {
+                const matchesCategory = (currentCategory === "Todos") || (p.category === currentCategory);
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      p.subtitle.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            noResults.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(product => {
+                // Generate WhatsApp pre-filled link
+                const waMessage = encodeURIComponent(`Hola PLAN B, me interesa consultar el producto: ${product.name} (${product.price}). ¿Tienen disponibilidad?`);
+                const waLink = `https://wa.me/523326016577?text=${waMessage}`;
+
+                // Tags HTML
+                const tagsHtml = product.tags.map(t => 
+                    `<span class="text-[10px] uppercase font-bold bg-white/5 border border-white/10 px-2 py-0.5 rounded text-white/80">${t}</span>`
+                ).join(' ');
+
+                return `
+                    <div class="bg-brand-card hover:bg-brand-black border border-white/10 hover:border-brand-blue/60 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between group shadow-lg hover:shadow-glow">
+                        
+                        <div>
+                            <!-- Visual Banner Card Header -->
+                            <div class="h-44 bg-gradient-to-br ${product.bgGradient} p-4 relative flex items-center justify-center border-b border-white/5 overflow-hidden">
+                                <div class="text-5xl text-brand-blue group-hover:scale-110 transition-transform duration-300">
+                                    <i class="${product.icon}"></i>
+                                </div>
+                                <span class="absolute top-3 left-3 bg-brand-black/80 backdrop-blur-md text-brand-blue text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md border border-brand-blue/30">
+                                    ${product.category}
+                                </span>
+                            </div>
+
+                            <!-- Card Body Content -->
+                            <div class="p-5 space-y-3">
+                                <div class="flex flex-wrap gap-1">
+                                    ${tagsHtml}
+                                </div>
+
+                                <div>
+                                    <h3 class="text-lg font-black text-white group-hover:text-brand-blue transition-colors">
+                                        ${product.name}
+                                    </h3>
+                                    <p class="text-xs text-brand-grayText font-medium mt-0.5">
+                                        ${product.subtitle}
+                                    </p>
+                                </div>
+
+                                <div class="pt-1">
+                                    <span class="text-xs text-brand-grayText uppercase tracking-wider block font-semibold">Precio</span>
+                                    <span class="text-xl font-black text-brand-blue">${product.price}</span>
+                                </div>
+
+                                <p class="text-xs text-brand-grayText line-clamp-3 leading-relaxed pt-1">
+                                    "${product.description}"
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer / Action Button -->
+                        <div class="p-5 pt-0 space-y-2">
+                            <button onclick="openModal(${product.id})" class="w-full text-xs font-bold text-brand-grayText hover:text-white py-2 transition-colors flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-eye"></i> Ver detalles completos
+                            </button>
+
+                            <a href="${waLink}" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="w-full bg-brand-blue hover:bg-brand-blueHover text-white py-3 rounded-xl font-extrabold text-xs text-center shadow-glow hover:shadow-glow-lg transition-all duration-300 flex items-center justify-center gap-2 transform active:scale-95">
+                                <i class="fa-brands fa-whatsapp text-base"></i>
+                                <span>CONSULTAR POR WHATSAPP</span>
+                            </a>
+                        </div>
+
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // CATEGORY FILTER HANDLER
+        function filterCategory(cat) {
+            currentCategory = cat;
+            
+            // Update UI buttons
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.className = "filter-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all bg-brand-blue text-white shadow-glow";
+                } else {
+                    btn.className = "filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-brand-black hover:bg-white/10 text-white/80";
+                }
+            });
+
+            renderProducts();
+        }
+
+        // SEARCH INPUT HANDLER
+        function handleSearch() {
+            searchQuery = document.getElementById('catalog-search').value;
+            renderProducts();
+        }
+
+        // RESET FILTERS
+        function resetFilters() {
+            document.getElementById('catalog-search').value = "";
+            searchQuery = "";
+            filterCategory('Todos');
+        }
+
+        // MODAL LOGIC
+        function openModal(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('modal-category').innerText = product.category;
+            document.getElementById('modal-title').innerText = product.name;
+            document.getElementById('modal-price').innerText = product.price;
+            document.getElementById('modal-description').innerText = `"${product.description}"`;
+            
+            // Modal icon
+            document.getElementById('modal-icon').className = product.icon + " text-6xl text-brand-blue";
+
+            // Modal tags
+            const tagsContainer = document.getElementById('modal-tags');
+            tagsContainer.innerHTML = product.tags.map(t => 
+                `<span class="text-[10px] uppercase font-bold bg-white/10 px-2 py-1 rounded text-white">${t}</span>`
+            ).join('');
+
+            // WhatsApp Button Link
+            const waMessage = encodeURIComponent(`Hola PLAN B, me interesa consultar detalles sobre el producto: ${product.name} (${product.price}).`);
+            const modalWaBtn = document.getElementById('modal-whatsapp-btn');
+            modalWaBtn.href = `https://wa.me/523326016577?text=${waMessage}`;
+
+            // Show Modal
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking backdrop
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('product-modal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
